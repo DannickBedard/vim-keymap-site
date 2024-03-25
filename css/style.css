@@ -1,0 +1,27 @@
+.section-wrapper {
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.keymap-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.keymap-item {
+  margin-bottom: 10px;
+}
+
+.keymap {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.description {
+  color: #666;
+}
+
