@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+  function handleThemeColor() {
+
+  }
 
   const url = 'https://raw.githubusercontent.com/DannickBedard/mySetup.nvim/main/README.md';
 
   getCurrentKeymaps();
   function getCurrentKeymaps() {
-    // TODO :: fetch github to get the readme.
-    //
-
     fetchGithubReadme();
   }
 
