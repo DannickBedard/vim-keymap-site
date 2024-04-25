@@ -5,6 +5,10 @@ body {
   background-color: #f9f9f9;
 }
 
+.d-flex {
+  display: flex !important;
+}
+
 .white {
   color : #e6e6e6;
 }
@@ -44,7 +48,7 @@ strong {
   background-color: #121212;
 }
 
-li {
+.keymap-item {
   border-bottom: 1px dashed #2f2f2f;
   padding-bottom: 0.8rem;
   padding-top: 0.4rem;

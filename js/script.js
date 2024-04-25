@@ -34,54 +34,57 @@ document.addEventListener("DOMContentLoaded", function() {
           if (sectionMatch) {
             currentSection = sectionMatch[1];
             keymapSections[currentSection] = [];
+          } else if (currentSection == "Note" || currentSection == "Notes") {
+            keymapSections[currentSection].push({ keymap: null, description: line });
           } else if (line.includes('->')) {
             const [keymap, description] = line.split('->').map(part => part.trim());
             keymapSections[currentSection].push({ keymap, description });
-          } else if (currentSection == "Note" || currentSection == "Notes") {
-            console.log("ici1");
-            keymapSections[currentSection].push({ keymap: null, description: line });
           }
         });
 
         // Generate HTML
         const container = document.getElementById('keymaps');
+        const keymapTemplate = document.getElementById('keymap-item');
+        const commandTemplate = document.getElementById('command-item');
+        const noteTemplate = document.getElementById('note-item');
+        const keymapSectionTemplate = document.getElementById('keymap-section');
 
         for (const section in keymapSections) {
           if (keymapSections[section].length == 0) {
             continue;
           }
 
-          const sectionWrapper = document.createElement('div');
-          sectionWrapper.classList.add('section-wrapper');
+          const keymapSectionClone = keymapSectionTemplate.content.cloneNode(true);
+          const keymapSectionTile = keymapSectionClone.querySelectorAll('.title')[0];
+          const keymapSectionList = keymapSectionClone.querySelectorAll('.keymap-list')[0];
 
-          const sectionHeading = document.createElement('h2');
-          sectionHeading.textContent = section;
-          sectionWrapper.appendChild(sectionHeading);
-
-          const keymapList = document.createElement('ul');
-          keymapList.classList.add('keymap-list');
+          keymapSectionTile.textContent = section;
 
           keymapSections[section].forEach(keymap => {
-            const listItem = document.createElement('li');
-            listItem.classList.add('keymap-item');
-            
-            const keymapText = document.createElement('span');
+            if (section == "Note" || section == "Notes") {
+
+              const commandTemplateClone = commandTemplate.content.cloneNode(true);
+              let commandDesctiption = commandTemplateClone.querySelectorAll('.description')[0];
+
+              commandDesctiption.textContent = keymap.description;
+
+              keymapSectionList.appendChild(commandTemplateClone);
+              return;
+            }
+            const keymapTemplateClone = keymapTemplate.content.cloneNode(true);
+            let keymapItem = keymapTemplateClone.querySelectorAll('.keymap')[0];
+            let keymapDesctiption = keymapTemplateClone.querySelectorAll('.description')[0];
+
             if (keymap.keymap) {
-              keymapText.classList.add('keymap');
-              keymapText.textContent = keymap.keymap;
+              keymapItem.textContent = keymap.keymap
             }
 
-            const descriptionText = document.createElement('span');
-            descriptionText.classList.add('description');
-            descriptionText.textContent = keymap.description;
+            keymapDesctiption.textContent = keymap.description;
 
-            listItem.appendChild(keymapText);
-            listItem.appendChild(descriptionText);
-            keymapList.appendChild(listItem);
+            keymapSectionList.appendChild(keymapTemplateClone);
           });
 
-          sectionWrapper.appendChild(keymapList);
-          container.appendChild(sectionWrapper);
+          container.appendChild(keymapSectionClone);
         }
       })
       .catch(error => {
